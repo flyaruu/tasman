@@ -1,0 +1,27 @@
+[ {
+  "Command" : "/entrypoint.sh redis-server",
+  "Created" : 1427129347,
+  "Id" : "95016b741baefc70b8b84b8fc23a79d16388f7d2bdfe773497d8367cd8c3107d",
+  "Image" : "redis:2",
+  "Names" : [ "/jovial_euclid" ],
+  "Ports" : [ {
+    "IP" : "0.0.0.0",
+    "PrivatePort" : 6379,
+    "PublicPort" : 49158,
+    "Type" : "tcp"
+  } ],
+  "Status" : "Up 20 hours"
+}, {
+  "Command" : "/entrypoint.sh redis-server",
+  "Created" : 1427129345,
+  "Id" : "bebeaad1a5d91527ce110f26667c81c3a4e3a4d022e594236908a26017767d89",
+  "Image" : "redis:2",
+  "Names" : [ "/focused_galileo" ],
+  "Ports" : [ {
+    "IP" : "0.0.0.0",
+    "PrivatePort" : 6379,
+    "PublicPort" : 49157,
+    "Type" : "tcp"
+  } ],
+  "Status" : "Up 20 hours"
+} ]

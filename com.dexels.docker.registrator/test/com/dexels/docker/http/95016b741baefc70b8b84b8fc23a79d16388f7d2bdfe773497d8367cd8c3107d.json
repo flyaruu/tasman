@@ -1,0 +1,109 @@
+{
+  "AppArmorProfile" : "",
+  "Args" : [ "redis-server" ],
+  "Config" : {
+    "AttachStderr" : false,
+    "AttachStdin" : false,
+    "AttachStdout" : false,
+    "Cmd" : [ "redis-server" ],
+    "CpuShares" : 0,
+    "Cpuset" : "",
+    "Domainname" : "",
+    "Entrypoint" : [ "/entrypoint.sh" ],
+    "Env" : [ "SERVICE_6379_REDIS=redis", "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", "REDIS_VERSION=2.8.19", "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-2.8.19.tar.gz", "REDIS_DOWNLOAD_SHA1=3e362f4770ac2fdbdce58a5aa951c1967e0facc8" ],
+    "ExposedPorts" : {
+      "6379/tcp" : { }
+    },
+    "Hostname" : "95016b741bae",
+    "Image" : "redis",
+    "MacAddress" : "",
+    "Memory" : 0,
+    "MemorySwap" : 0,
+    "NetworkDisabled" : false,
+    "OnBuild" : null,
+    "OpenStdin" : false,
+    "PortSpecs" : null,
+    "StdinOnce" : false,
+    "Tty" : false,
+    "User" : "",
+    "Volumes" : {
+      "/data" : { }
+    },
+    "WorkingDir" : "/data"
+  },
+  "Created" : "2015-03-23T16:49:07.128453851Z",
+  "Driver" : "aufs",
+  "ExecDriver" : "native-0.2",
+  "ExecIDs" : null,
+  "HostConfig" : {
+    "Binds" : null,
+    "CapAdd" : null,
+    "CapDrop" : null,
+    "ContainerIDFile" : "",
+    "Devices" : [ ],
+    "Dns" : null,
+    "DnsSearch" : null,
+    "ExtraHosts" : null,
+    "IpcMode" : "",
+    "Links" : null,
+    "LxcConf" : [ ],
+    "NetworkMode" : "bridge",
+    "PidMode" : "",
+    "PortBindings" : { },
+    "Privileged" : false,
+    "PublishAllPorts" : true,
+    "ReadonlyRootfs" : false,
+    "RestartPolicy" : {
+      "MaximumRetryCount" : 0,
+      "Name" : ""
+    },
+    "SecurityOpt" : null,
+    "VolumesFrom" : null
+  },
+  "HostnamePath" : "/mnt/sda1/var/lib/docker/containers/95016b741baefc70b8b84b8fc23a79d16388f7d2bdfe773497d8367cd8c3107d/hostname",
+  "HostsPath" : "/mnt/sda1/var/lib/docker/containers/95016b741baefc70b8b84b8fc23a79d16388f7d2bdfe773497d8367cd8c3107d/hosts",
+  "Id" : "95016b741baefc70b8b84b8fc23a79d16388f7d2bdfe773497d8367cd8c3107d",
+  "Image" : "3b7234aa3098129352dcc032383aaf789de2d64595938ba16302db9d1aedf8eb",
+  "MountLabel" : "",
+  "Name" : "/jovial_euclid",
+  "NetworkSettings" : {
+    "Bridge" : "docker0",
+    "Gateway" : "172.17.42.1",
+    "GlobalIPv6Address" : "",
+    "GlobalIPv6PrefixLen" : 0,
+    "IPAddress" : "172.17.0.13",
+    "IPPrefixLen" : 16,
+    "IPv6Gateway" : "",
+    "LinkLocalIPv6Address" : "fe80::42:acff:fe11:d",
+    "LinkLocalIPv6PrefixLen" : 64,
+    "MacAddress" : "02:42:ac:11:00:0d",
+    "PortMapping" : null,
+    "Ports" : {
+      "6379/tcp" : [ {
+        "HostIp" : "0.0.0.0",
+        "HostPort" : "49158"
+      } ]
+    }
+  },
+  "Path" : "/entrypoint.sh",
+  "ProcessLabel" : "",
+  "ResolvConfPath" : "/mnt/sda1/var/lib/docker/containers/95016b741baefc70b8b84b8fc23a79d16388f7d2bdfe773497d8367cd8c3107d/resolv.conf",
+  "RestartCount" : 0,
+  "State" : {
+    "Error" : "",
+    "ExitCode" : 0,
+    "FinishedAt" : "0001-01-01T00:00:00Z",
+    "OOMKilled" : false,
+    "Paused" : false,
+    "Pid" : 25220,
+    "Restarting" : false,
+    "Running" : true,
+    "StartedAt" : "2015-03-23T16:49:07.47439123Z"
+  },
+  "Volumes" : {
+    "/data" : "/mnt/sda1/var/lib/docker/vfs/dir/e649ad058812c0838582562158ffcdf30386bb6cc503e4cb2fb6271a16ad4d3b"
+  },
+  "VolumesRW" : {
+    "/data" : true
+  }
+}
