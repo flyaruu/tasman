@@ -19,7 +19,7 @@
  * under the License.
  */
 
-package com.dexels.docker.registrator.impl;
+package com.dexels.docker.repository.boot2docker;
 
 import java.io.BufferedReader;
 import java.io.IOException;

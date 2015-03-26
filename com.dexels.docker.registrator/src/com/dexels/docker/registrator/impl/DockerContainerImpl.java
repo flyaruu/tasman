@@ -20,15 +20,17 @@ public class DockerContainerImpl implements DockerContainer {
 	private final JsonNode core;
 	private final Map<String, DockerServiceMapping> mappings= new HashMap<>();
 	private final String id;
+	private String hostname;
 
 	
 	
 	private final static Logger logger = LoggerFactory
 			.getLogger(DockerContainerImpl.class);
 	
-	public DockerContainerImpl(JsonNode core) {
+	public DockerContainerImpl(JsonNode core, String hostName) {
 		this.id = core.get("Id").asText();
 		this.core = core;
+		this.hostname = hostName;
 		load();
 	}
 	
@@ -104,7 +106,7 @@ public class DockerContainerImpl implements DockerContainer {
 						} else {
 							ds.addKeyValue(name,value);
 						}
-						logger.info("Service detected: "+value+" at ip: "+ds.getHostIp()+"port: "+ds.getHostPort());
+						logger.info("Service detected: "+value+" at ip: "+ds.getHostIp()+" port: "+ds.getHostPort());
 					}
 				}
 			}
@@ -136,10 +138,10 @@ public class DockerContainerImpl implements DockerContainer {
 					} else if (mappings.size() > 1) {
 						System.err.println("Warning, multiple mappings. I don't know what that means, ignoring others");
 					}
-					String hostIp = mappings.get(0).get("HostIp").asText();
+//					String hostIp = hostname; //mappings.get(0).get("HostIp").asText();
 					String hostPort = mappings.get(0).get("HostPort").asText();
 					DockerServiceMapping ds = new DockerServiceMappingImpl(port, protocol,
-							hostPort, hostIp);
+							hostPort, hostname);
 					this.mappings.put(port, ds);
 				}
 			}

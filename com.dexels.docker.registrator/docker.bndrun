@@ -18,7 +18,8 @@
 	org.apache.commons.logging;version=1.1.1,\
 	slf4j.api;version=1.7.7,\
 	slf4j.simple;version=1.7.7,\
-	com.dexels.docker.http;version=latest,\
+	com.dexels.docker.registrator;version=latest,\
+	com.dexels.redis.client;version=latest,\
 	bcpkix;version=1.51.0,\
 	bcprov;version=1.51.0,\
 	jackson-core-lgpl,\
@@ -26,7 +27,11 @@
 	org.apache.felix.fileinstall;version=3.4.0,\
 	org.ops4j.pax.web.pax-web-jetty-bundle;version=3.1.4,\
 	org.apache.felix.webconsole.plugins.ds;version=1.0.0,\
-	org.apache.felix.eventadmin;version=1.4.2
+	org.apache.felix.eventadmin;version=1.4.2,\
+	com.dexels.docker.registrator.api;version=latest,\
+	com.dexels.unix.socket;version=latest,\
+	org.apache.commons.pool2,\
+	com.dexels.docker.repository.boot2docker;version=latest
 
 -runrequires:\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\

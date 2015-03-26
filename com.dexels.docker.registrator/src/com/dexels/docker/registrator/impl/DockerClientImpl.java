@@ -64,30 +64,16 @@ public class DockerClientImpl implements DockerClient {
 	public List<String> getIds() throws IOException {
 		List<String> result = new ArrayList<>();
     	ArrayNode nodes = (ArrayNode) jsonClient.callUrl("/containers/json");
-    	
-//    	ObjectMapper m = new ObjectMapper();
-//		m.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
-//    	m.writerWithDefaultPrettyPrinter().writeValue(System.err, nodes);
-//
-//    	System.err.println("\n\n\n\n");
-    	
     	for (JsonNode jsonNode : nodes) {
     		String id = jsonNode.get("Id").getTextValue();
-//			System.err.println("jsonNode: "+id);
 			result.add(id);
 		}
-		return result; //jsonClient.callUrl(url);
+		return result;
 	}
 
 	public DockerContainer loadEntry(String id) throws IOException {
     	JsonNode nodes = jsonClient.callUrl("/containers/"+id+"/json");
-//    	System.err.println("\n\n\n\n");
-//    	ObjectMapper m = new ObjectMapper();
-//		m.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
-//    	m.writerWithDefaultPrettyPrinter().writeValue(System.err, nodes);
-//
-//    	System.err.println("\n\n\n\n");
-    	return new DockerContainerImpl(nodes);
+    	return new DockerContainerImpl(nodes,jsonClient.getHostname());
 	}
 
 	public Map<String, String> getEnv(String id) throws IOException {
@@ -103,7 +89,6 @@ public class DockerClientImpl implements DockerClient {
 			result.put(split[0], split[1]);
 			
 		}
-//    	System.err.println(env);
     	return result;
 	}
 	

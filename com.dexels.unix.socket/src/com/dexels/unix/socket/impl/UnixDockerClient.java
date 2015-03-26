@@ -1,9 +1,8 @@
-package com.dexels.docker.registrator.impl;
+package com.dexels.unix.socket.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,7 +12,6 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -22,50 +20,36 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dexels.docker.registrator.JsonClient;
 import com.dexels.unix.socket.UnixSocketFactory;
 
-
-@Component(name="docker.registrator.boot2docker", configurationPolicy=ConfigurationPolicy.REQUIRE)
-public class Boot2DockerClient implements JsonClient {
+@Component(name = "docker")
+public class UnixDockerClient implements JsonClient {
 
 	private CloseableHttpClient httpclient;
 	
-	private String url = null;
-	
 	private final static Logger logger = LoggerFactory
-			.getLogger(Boot2DockerClient.class);
+			.getLogger(UnixDockerClient.class);
 	
 	@Activate
-	public void activate(Map<String,Object> settings)  {
-		url = (String) settings.get("url");
-		try {
-			String path = (String) settings.get("path"); // home + "/"+ ".boot2docker/certs/boot2docker-vm"
-			if(path==null) {
-				path = 		System.getProperty("user.home") + "/"
-						+ ".boot2docker/certs/boot2docker-vm";
-			}
-			this.httpclient = createBoot2DockerClient(path);
-		} catch (DockerCertificateException e) {
-			logger.error("Error: ", e);
+	public void activate(Map<String, Object> settings) {
+		String path = (String) settings.get("path");
+		if (path == null) {
+			path = "/var/run/docker.sock";
 		}
+		this.httpclient = createSocketClient(path);
 	}
 
-	private CloseableHttpClient createBoot2DockerClient(String path)
-			throws DockerCertificateException {
-		DockerCertificates dc = new DockerCertificates(Paths.get(path));
+	private CloseableHttpClient createSocketClient(String path) {
 		Registry<ConnectionSocketFactory> registry = RegistryBuilder
 				.<ConnectionSocketFactory> create()
 				.register("http",
 						PlainConnectionSocketFactory.getSocketFactory())
-				.register("unix",
-						new UnixSocketFactory())
-				.register("https",
-						new SSLConnectionSocketFactory(dc.sslContext)).build();
+				.register("unix", new UnixSocketFactory()).build();
 		HttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
 				registry);
 		CloseableHttpClient httpclient = HttpClients.custom()
@@ -73,11 +57,20 @@ public class Boot2DockerClient implements JsonClient {
 		return httpclient;
 	}
 	
-
+	@Deactivate
+	public void deactivate() {
+		try {
+			if(httpclient!=null) {
+				httpclient.close();
+			}
+		} catch (IOException e) {
+			logger.error("Error: ", e);
+		}
+	}
 	
 	@Override
 	public JsonNode callUrl(String url) throws IOException {
-		HttpGet httpget = new HttpGet(this.url + url);
+		HttpGet httpget = new HttpGet(url);
 		CloseableHttpResponse response = httpclient.execute(httpget);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		response.getEntity().writeTo(baos);
@@ -89,7 +82,9 @@ public class Boot2DockerClient implements JsonClient {
 		return node;
 	}
 
-
-
+	@Override
+	public String getHostname() {
+		return "";
+	}
 
 }

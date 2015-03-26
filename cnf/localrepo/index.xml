@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1420234102165" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1427280128063" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="ch.qos.logback.classic"/>
@@ -1166,6 +1166,52 @@
       <attribute name="bundle-symbolic-name" value="org.apache.commons.pool"/>
       <attribute name="bundle-version" type="Version" value="1.5.5"/>
     </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.commons.pool2"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="2.3.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="3e794e75be78f63cc31b6676697e45f07085903a1039169459132513d85c62ae"/>
+      <attribute name="url" value="org.apache.commons.pool2/org.apache.commons.pool2-2.3.0.jar"/>
+      <attribute name="size" type="Long" value="109568"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.apache.commons.pool2"/>
+      <attribute name="bundle-version" type="Version" value="2.3.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.apache.commons.pool2"/>
+      <attribute name="bundle-version" type="Version" value="2.3.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.pool2"/>
+      <attribute name="version" type="Version" value="2.3.0"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.pool2"/>
+      <attribute name="bundle-version" type="Version" value="2.3.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.pool2.impl"/>
+      <attribute name="version" type="Version" value="2.3.0"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.pool2"/>
+      <attribute name="bundle-version" type="Version" value="2.3.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="osgi.wiring.package" value="org.apache.commons.pool2.proxy"/>
+      <attribute name="version" type="Version" value="2.3.0"/>
+      <attribute name="bundle-symbolic-name" value="org.apache.commons.pool2"/>
+      <attribute name="bundle-version" type="Version" value="2.3.0"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=net.sf.cglib.proxy)"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(osgi.wiring.package=javax.management)"/>
+    </requirement>
   </resource>
   <resource>
     <capability namespace="osgi.identity">

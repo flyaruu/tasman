@@ -15,7 +15,7 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 	private final Map<String,String> kv = new HashMap<>();
 	
 	private String name;
-	private int containerPort;
+//	private int containerPort;
 	
 	public DockerServiceMappingImpl(String port, String protocol, String hostPort, String hostIp) {
 		this.port = port;
@@ -24,7 +24,9 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 		this.hostIp = hostIp;
 	}
 	
-	
+	public String toString() {
+		return "Name: "+name+" hostIp: "+hostIp+" hostPort: "+hostPort+" port: "+port+" protocol: "+protocol+" tags: "+tags+" :: "+kv;
+	}
 	/* (non-Javadoc)
 	 * @see com.dexels.docker.http.impl.DockerMapping#getPort()
 	 */
@@ -63,28 +65,11 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 	}
 
 
-	public int getContainerPort() {
-		return containerPort;
-	}
-
-
-	public String toString() {
-		return "Port: "+port+" protocol: "+protocol+" hostPort: "+hostPort+" hostIp: "+hostIp;
-	}
-
 
 	@Override
 	public String getTags() {
 		return this.tags;
 	}
-
-
-	@Override
-	public void setContainerPort(int port) {
-		this.containerPort = port;
-		
-	}
-
 
 	@Override
 	public void setName(String name) {
@@ -110,5 +95,11 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 	@Override
 	public Map<String,String> getKeyValue() {
 		return Collections.unmodifiableMap(kv);
+	}
+
+	@Override
+	public void setContainerPort(int port) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,4 +1,4 @@
-package com.dexels.docker.registrator.impl;
+package com.dexels.docker.repository.boot2docker;
 
 /*
  * Copyright (c) 2014 Spotify AB.

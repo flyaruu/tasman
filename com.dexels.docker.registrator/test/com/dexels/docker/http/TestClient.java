@@ -39,4 +39,9 @@ public class TestClient implements JsonClient {
 	public void activate(Map<String, Object> settings) {
 		
 	}
+
+	@Override
+	public String getHostname() {
+		return "localhost";
+	}
 }

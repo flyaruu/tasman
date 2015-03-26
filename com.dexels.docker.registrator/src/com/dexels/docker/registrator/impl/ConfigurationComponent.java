@@ -2,6 +2,8 @@ package com.dexels.docker.registrator.impl;
 
 import java.io.IOException;
 import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -57,8 +60,12 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 				String id = dockerContainer.getId();
 				String serviceId = generateServiceId(id,serviceMapping.getValue());
 				String servicePid = generateServicePid(serviceMapping.getValue());
-				Configuration newConfig = injectConfig(serviceId, servicePid,serviceMapping.getValue());
-				copy.remove(newConfig);
+				if(servicePid!=null) {
+					Configuration newConfig = injectConfig(serviceId, servicePid,serviceMapping.getValue());
+					copy.remove(newConfig);
+				} else {
+					logger.info("Skipping incomplete mapping: "+serviceMapping.getValue());
+				}
 			}
 			containerCount++;
 		}
@@ -75,6 +82,7 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		if(driver!=null) {
 			return "docker.registrator."+driver;
 		}
+		logger.info("servicePId missing: "+mm);
 
 		return null;
 	}
@@ -89,7 +97,7 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 			}
 		} 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			logger.error("Error: ", e);
 		}
@@ -98,7 +106,7 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 
 	private Configuration injectConfig(String serviceId, String servicePid,DockerServiceMapping mapping) throws IOException {
 		Configuration c = createOrReuse(servicePid,"(id="+serviceId+")", true);
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 		properties.put("id", serviceId);
 		for (Entry<String,String> e : mapping.getKeyValue().entrySet()) {
 			if(e.getKey().equals("DRIVER") || e.getKey().equals("NAME")) {
@@ -110,12 +118,69 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		properties.put("host.port", mapping.getHostPort());
 		properties.put("container.port", mapping.getPort());
 		properties.put("host.protocol", mapping.getProtocol());
-		properties.put("host.tags", mapping.getTags());
-		c.update(properties);
+		if(mapping.getTags()!=null) {
+			properties.put("host.tags", mapping.getTags());
+		}
+		appendIfChanged(c, properties);
+//		c.update(properties);
 		ownedConfiguration.add(c);
 		return c;
 	}
 
+	// Ugly but necessary copying method for Dictionaries
+	private static <K, V> Map<K, V> valueOf(Dictionary<K, V> dictionary) {
+		  if (dictionary == null) {
+		    return null;
+		  }
+		  Map<K, V> map = new HashMap<K, V>(dictionary.size());
+		  Enumeration<K> keys = dictionary.keys();
+		  while (keys.hasMoreElements()) {
+		    K key = keys.nextElement();
+		    map.put(key, dictionary.get(key));
+		  }
+		  return map;
+		}
+	
+	// Need to strip the servicePid and factoryPid to accurately compare
+	private boolean serviceConfigDictionariesEqual(Dictionary<String,Object> a,Dictionary<String,Object> b) {
+		Map<String, Object> ac = valueOf(a);
+		Map<String, Object> bc = valueOf(b);
+		ac.remove(Constants.SERVICE_PID);
+		ac.remove("service.factoryPid");
+		bc.remove(Constants.SERVICE_PID);
+		bc.remove("service.factoryPid");
+		System.err.println("a: "+ac);
+		System.err.println("b: "+bc);
+		return ac.equals(bc);
+	}
+	@SuppressWarnings("unchecked")
+	private void appendIfChanged(Configuration c,
+			Hashtable<String, Object> settings) throws IOException {
+		Dictionary<String, Object> old = c.getProperties();
+		if (old != null) {
+			if (!serviceConfigDictionariesEqual(old,settings)) {
+				logger.info("Not Equals");
+				System.err.println("old: "+old+" new: "+settings);
+				Dictionary<String, Object> merged = new Hashtable<String, Object>();
+				Enumeration<String> keys = old.keys();
+				while (keys.hasMoreElements()) {
+					String next = keys.nextElement();
+					merged.put(next, old.get(next));
+				}
+				keys = settings.keys();
+				while (keys.hasMoreElements()) {
+					String next = keys.nextElement();
+					merged.put(next, settings.get(next));
+				}
+				
+				c.update(merged);
+			} else {
+				logger.info("Equals");
+			}
+		} else {
+			c.update(settings);
+		}
+	}
 	@Deactivate
 	public void deactivate() {
 		Set<Configuration> copy = new HashSet<>(ownedConfiguration);
@@ -158,8 +223,10 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 
 	private String generateServiceId(String id,
 			DockerServiceMapping serviceMapping) {
-		return id + "_" + serviceMapping.getHostIp() + ":"
-				+ serviceMapping.getHostPort();
+		String serviceId = id + "_" + serviceMapping.getHostIp() + ":"
+						+ serviceMapping.getHostPort();
+		logger.info("serviceId: {}",serviceId);
+		return serviceId;
 	}
 
 	@Reference(unbind = "clearDockerClient", policy = ReferencePolicy.DYNAMIC)

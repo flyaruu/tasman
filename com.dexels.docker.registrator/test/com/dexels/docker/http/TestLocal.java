@@ -17,8 +17,6 @@ import org.junit.Test;
 import com.dexels.docker.registrator.DockerContainer;
 import com.dexels.docker.registrator.DockerServiceMapping;
 import com.dexels.docker.registrator.JsonClient;
-import com.dexels.docker.registrator.impl.Boot2DockerClient;
-import com.dexels.docker.registrator.impl.DockerCertificateException;
 import com.dexels.docker.registrator.impl.DockerClientImpl;
 
 
@@ -27,8 +25,8 @@ public class TestLocal {
 	private JsonClient b2d;
 
 	@Before
-	public void setup() throws DockerCertificateException {
-		b2d = new Boot2DockerClient();
+	public void setup() {
+		b2d = new TestClient();
     	Map<String,Object> settings = new HashMap<>();
 		settings.put("path",System.getProperty("user.home") + "/"
 				+ ".boot2docker/certs/boot2docker-vm" );
