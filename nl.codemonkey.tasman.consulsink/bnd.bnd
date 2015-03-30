@@ -1,0 +1,10 @@
+-buildpath:  \
+	osgi.core,\
+	osgi.cmpn,\
+	biz.aQute.bnd.annotation,\
+	${junit}
+Bundle-Version: 0.0.0.${tstamp}
+Private-Package:  \
+	nl.codemonkey.tasman.consulsink
+Service-Component:  \
+	*

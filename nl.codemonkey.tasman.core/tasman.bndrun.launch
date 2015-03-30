@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="bndtools.launch">
+<booleanAttribute key="clean" value="true"/>
+<booleanAttribute key="dynamicBundles" value="true"/>
+<stringAttribute key="launchTarget" value="nl.codemonkey.tasman.core/docker.bndrun"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="DOCKER_HOST" value="tcp://192.168.59.103:2376"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="nl.codemonkey.tasman.core"/>
+<booleanAttribute key="trace" value="false"/>
+</launchConfiguration>

@@ -1,6 +1,0 @@
--buildpath:  \
-	biz.aQute.bnd.annotation,\
-	jackson-core-lgpl
-Bundle-Version: 1.0.0.${tstamp}
-Export-Package:  \
-	com.dexels.docker.registrator
