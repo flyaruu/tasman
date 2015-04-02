@@ -1,5 +1,6 @@
 package nl.codemonkey.tasman.api;
 
+import java.util.List;
 import java.util.Map;
 
 public interface DockerServiceMapping {
@@ -14,6 +15,8 @@ public interface DockerServiceMapping {
 
 	public String getTags();
 
+	public List<String> getTagList();
+
 	public void setContainerPort(int port);
 
 	public void setName(String value);
@@ -23,5 +26,8 @@ public interface DockerServiceMapping {
 	public void addKeyValue(String name, String value);
 
 	public Map<String, String> getKeyValue();
+
+	public String getName();
+
 	
 }

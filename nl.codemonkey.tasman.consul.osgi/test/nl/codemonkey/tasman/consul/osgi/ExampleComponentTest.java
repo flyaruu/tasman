@@ -1,4 +1,4 @@
-package com.dexels.docker.consulsource;
+package nl.codemonkey.tasman.consul.osgi;
 
 import junit.framework.TestCase;
 

@@ -31,7 +31,10 @@
 	nl.codemonkey.tasman.api;version=latest,\
 	nl.codemonkey.tasman.unix.socket;version=latest,\
 	org.apache.commons.pool2,\
-	nl.codemonkey.tasman.boot2docker;version=latest
+	nl.codemonkey.tasman.boot2docker;version=latest,\
+	nl.codemonkey.tasman.consul.osgi;version=latest,\
+	nl.codemonkey.tasman.consulsink;version=latest,\
+	com.google.gson;version=2.3.1
 
 -runrequires:\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\

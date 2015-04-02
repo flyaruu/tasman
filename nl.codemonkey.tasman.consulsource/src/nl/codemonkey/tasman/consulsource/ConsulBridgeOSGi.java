@@ -1,20 +1,16 @@
-package nl.codemonkey.tasman.core;
+package nl.codemonkey.tasman.consulsource;
 
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import nl.codemonkey.tasman.api.DockerClient;
-import nl.codemonkey.tasman.api.DockerContainer;
-import nl.codemonkey.tasman.api.DockerServiceMapping;
 
 import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
@@ -30,18 +26,25 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = "tasman.config",immediate=true)
-public class ConfigurationComponent implements EventHandler, Runnable {
+import com.ecwid.consul.v1.Response;
+import com.ecwid.consul.v1.agent.AgentClient;
+import com.ecwid.consul.v1.agent.model.Service;
+import com.ecwid.consul.v1.kv.KeyValueClient;
+import com.ecwid.consul.v1.kv.model.GetBinaryValue;
 
-	private DockerClient dockerClient = null;
+@Component(name = "tasman.consul.osgi",immediate=true)
+public class ConsulBridgeOSGi implements EventHandler, Runnable {
 
 	private ConfigurationAdmin configAdmin = null;
-	private Set<Configuration> ownedConfiguration = new HashSet<>();
-	private final static Logger logger = LoggerFactory.getLogger(ConfigurationComponent.class);
+	private Map<String,Configuration> ownedConfiguration = new HashMap<>();
+	private final static Logger logger = LoggerFactory.getLogger(ConsulBridgeOSGi.class);
 
 	private final ExecutorService pool = Executors.newFixedThreadPool(1);
 
 	private boolean running = false;
+	private KeyValueClient keyValueClient;
+	private AgentClient agentClient;
+	
 	@Activate
 	public void activate() throws IOException {
 		logger.info("Activating config components");
@@ -50,39 +53,56 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 	}
 
 	private void refreshConfig() throws IOException {
-		Set<Configuration> copy = new HashSet<>(ownedConfiguration);
-		dockerClient.refresh();
-		Set<DockerContainer> containers = dockerClient.getContainers();
+		Map<String,Configuration> copy = new HashMap<>(ownedConfiguration);
 		int containerCount = 0;
-		for (DockerContainer dockerContainer : containers) {
-			for (Entry<String, DockerServiceMapping> serviceMapping : dockerContainer
-					.getMappings().entrySet()) {
-				String id = dockerContainer.getId();
-				String serviceId = generateServiceId(id,serviceMapping.getValue());
-				String servicePid = generateServicePid(serviceMapping.getValue());
-				if(servicePid!=null) {
-					Configuration newConfig = injectConfig(serviceId, servicePid,serviceMapping.getValue());
-					copy.remove(newConfig);
-				} else {
-					logger.info("Skipping incomplete mapping: "+serviceMapping.getValue());
-				}
+		Map<String,Service> services = agentClient.getAgentServices().getValue();
+		for (Map.Entry<String, Service> element : services.entrySet()) {
+			
+			String serviceId = generateServiceId(element.getValue());
+			Map<String,String> settings = loadConsulSettings(serviceId); 
+//			String id = dockerContainer.getId();
+			String servicePid = generateServicePid(settings);
+			if(servicePid!=null) {
+				Configuration newConfig = injectConfig(serviceId, servicePid,settings,element.getValue());
+				copy.remove(serviceId);
+			} else {
+//				logger.info("Skipping incomplete mapping: "+serviceMapping.getValue());
 			}
-			containerCount++;
+			
+			
 		}
-		for (Configuration orphan : copy) {
-			orphan.delete();
-			ownedConfiguration.remove(orphan);
+
+		for (Map.Entry<String, Configuration> orphanEntry : copy.entrySet()) {
+			orphanEntry.getValue().delete();
+			ownedConfiguration.remove(orphanEntry.getKey());
 		}
 		System.err.println("# orphans: "+copy.size()+" containers: "+containerCount);
 	}
 
-	private String generateServicePid(DockerServiceMapping mapping) {
-		Map<String, String> mm = mapping.getKeyValue();
-		String driver = mm.get("DRIVER");
+	private Map<String, String> loadConsulSettings(String serviceId) {
+		Response<List<GetBinaryValue>> result = keyValueClient.getKVBinaryValues(serviceId);
+		List<GetBinaryValue> list = result.getValue();
+		Map<String, String> dict = new HashMap<>();
+		if(list!=null) {
+			for (GetBinaryValue element : list) {
+				String value = new String(element.getValue());
+				String key = element.getKey();
+				String[] keyparts = key.split("/");
+				if(value!=null) {
+					dict.put(keyparts[1], value);
+				}
+			}
+		}
+		return dict;
+	}
+
+	private String generateServicePid(Map<String,String> settings) {
+//		Map<String, String> mm = mapping.getKeyValue();
+		String driver = settings.get("DRIVER");
 		if(driver!=null) {
 			return "tasman."+driver;
 		}
-		logger.info("servicePId missing: "+mm);
+		logger.info("servicePid missing: "+settings);
 
 		return null;
 	}
@@ -104,27 +124,36 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		pool.submit(this);
 	}
 
-	private Configuration injectConfig(String serviceId, String servicePid,DockerServiceMapping mapping) throws IOException {
+	private Configuration injectConfig(String serviceId, String servicePid,Map<String,String> mapping, Service service) throws IOException {
 		Configuration c = createOrReuse(servicePid,"(id="+serviceId+")", true);
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 		properties.put("id", serviceId);
-		for (Entry<String,String> e : mapping.getKeyValue().entrySet()) {
+		System.err.println(">>>>>>>>>>>>>>>>>>>>>> "+mapping);
+		for (Entry<String, String> e : mapping.entrySet()) {
 			if(e.getKey().equals("DRIVER") || e.getKey().equals("NAME")) {
 				continue;
 			}
 			properties.put(e.getKey(),e.getValue());
 		}  
-		properties.put("host.ip", mapping.getHostIp());
-		properties.put("host.port", mapping.getHostPort());
-		properties.put("container.port", mapping.getPort());
-		properties.put("host.protocol", mapping.getProtocol());
-		if(mapping.getTags()!=null) {
-			properties.put("host.tags", mapping.getTags());
+		properties.put("host.ip", service.getAddress());
+		properties.put("host.port", service.getPort());
+//		properties.put("container.port", service.getPort());
+//		properties.put("host.protocol", service. mapping.getProtocol());
+		List<String> tags = service.getTags();
+		if(tags!=null) {
+			properties.put("host.tags",join(tags,","));
 		}
 		appendIfChanged(c, properties);
-//		c.update(properties);
-		ownedConfiguration.add(c);
+		ownedConfiguration.put(serviceId,c);
 		return c;
+	}
+	
+	private static String join(Iterable<? extends CharSequence> s, String delimiter) {
+	    Iterator<? extends CharSequence> iter = s.iterator();
+	    if (!iter.hasNext()) return "";
+	    StringBuilder buffer = new StringBuilder(iter.next());
+	    while (iter.hasNext()) buffer.append(delimiter).append(iter.next());
+	    return buffer.toString();
 	}
 
 	// Ugly but necessary copying method for Dictionaries
@@ -149,8 +178,6 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		ac.remove("service.factoryPid");
 		bc.remove(Constants.SERVICE_PID);
 		bc.remove("service.factoryPid");
-		System.err.println("a: "+ac);
-		System.err.println("b: "+bc);
 		return ac.equals(bc);
 	}
 	@SuppressWarnings("unchecked")
@@ -159,8 +186,6 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		Dictionary<String, Object> old = c.getProperties();
 		if (old != null) {
 			if (!serviceConfigDictionariesEqual(old,settings)) {
-				logger.info("Not Equals");
-				System.err.println("old: "+old+" new: "+settings);
 				Dictionary<String, Object> merged = new Hashtable<String, Object>();
 				Enumeration<String> keys = old.keys();
 				while (keys.hasMoreElements()) {
@@ -174,8 +199,6 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 				}
 				
 				c.update(merged);
-			} else {
-				logger.info("Equals");
 			}
 		} else {
 			c.update(settings);
@@ -183,8 +206,8 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 	}
 	@Deactivate
 	public void deactivate() {
-		Set<Configuration> copy = new HashSet<>(ownedConfiguration);
-		for (Configuration configuration : copy) {
+		Map<String,Configuration> copy = new HashMap<>(ownedConfiguration);
+		for (Configuration configuration : copy.values()) {
 			try {
 				configuration.delete();
 			} catch (IOException e) {
@@ -195,6 +218,7 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		running = false;
 		pool.shutdown();
 	}
+
 	private Configuration createOrReuse(String pid, final String filter,
 			boolean factory) throws IOException {
 		Configuration configuration = null;
@@ -221,25 +245,13 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		return configuration;
 	}
 
-	private String generateServiceId(String id,
-			DockerServiceMapping serviceMapping) {
-		String serviceId = id + "_" + serviceMapping.getHostIp() + ":"
-						+ serviceMapping.getHostPort();
+	private String generateServiceId(Service service) {
+		String id = service.getId();
+		System.err.println("id: "+id);
+		String serviceId = id.substring(0,Math.min(id.length(), 8)) + "-" + service.getAddress() + "-"
+						+ service.getPort();
 		logger.info("serviceId: {}",serviceId);
 		return serviceId;
-	}
-
-	@Reference(unbind = "clearDockerClient", policy = ReferencePolicy.DYNAMIC)
-	public synchronized void setDockerClient(DockerClient dc) {
-		this.dockerClient = dc;
-	}
-
-	public synchronized DockerClient getDockerClient() {
-		return dockerClient;
-	}
-
-	public void clearDockerClient(DockerClient dc) {
-		this.dockerClient = null;
 	}
 
 	@Reference(unbind = "clearConfigAdmin", policy = ReferencePolicy.DYNAMIC)
@@ -260,6 +272,20 @@ public class ConfigurationComponent implements EventHandler, Runnable {
 		}
 	}
 
+	@Reference(unbind = "clearAgentClient", policy = ReferencePolicy.DYNAMIC)
+	public void setAgentClient(AgentClient agentClient) {
+		this.agentClient = agentClient;
+	}
+	public void clearAgentClient(AgentClient agentClient) {
+		this.agentClient = null;
+	}
 
+	@Reference(unbind = "clearKeyValueClient", policy = ReferencePolicy.DYNAMIC)
+	public void setKeyValueClient(KeyValueClient keyValueClient) {
+		this.keyValueClient = keyValueClient;
+	}
+	public void clearKeyValueClient(KeyValueClient keyValueClient) {
+		this.keyValueClient = null;
+	}
 
 }

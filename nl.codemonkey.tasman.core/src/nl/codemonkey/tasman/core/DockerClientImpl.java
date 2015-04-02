@@ -85,7 +85,7 @@ public class DockerClientImpl implements DockerClient {
 
 	public DockerContainer loadEntry(String id) throws IOException {
     	JsonNode nodes = jsonClient.callUrl("/containers/"+id+"/json");
-    	dumpNode(nodes);
+//    	dumpNode(nodes);
 
     	return new DockerContainerImpl(nodes,jsonClient.getHostname());
 	}

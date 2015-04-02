@@ -1,7 +1,9 @@
 package nl.codemonkey.tasman.core;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import nl.codemonkey.tasman.api.DockerServiceMapping;
@@ -60,11 +62,10 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 	}
 
 
+	@Override
 	public String getName() {
 		return name;
 	}
-
-
 
 	@Override
 	public String getTags() {
@@ -86,7 +87,16 @@ public class DockerServiceMappingImpl implements DockerServiceMapping {
 //		}
 	}
 
-
+	@Override
+	public List<String> getTagList() {
+		if(this.tags==null) {
+			return Collections.emptyList();
+		}
+		String[] elts = tags.split(",");
+		return Arrays.asList(elts);
+		
+	}
+	
 	@Override
 	public void addKeyValue(String name, String value) {
 		kv.put(name, value);

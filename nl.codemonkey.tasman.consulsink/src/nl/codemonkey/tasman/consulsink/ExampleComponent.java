@@ -1,6 +1,7 @@
 package nl.codemonkey.tasman.consulsink;
 
-import aQute.bnd.annotation.component.*;
+import org.osgi.service.component.annotations.Component;
+
 
 @Component
 public class ExampleComponent {

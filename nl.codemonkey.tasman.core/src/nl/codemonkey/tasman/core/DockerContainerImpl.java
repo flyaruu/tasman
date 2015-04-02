@@ -66,7 +66,7 @@ public class DockerContainerImpl implements DockerContainer {
 			DockerServiceMapping ds = null;
 			if(mappings.size()==1) {
 				ds = mappings.values().iterator().next();
-				logger.info("Service detected: "+defaultName+" at ip: "+ds.getHostIp()+"port: "+ds.getHostPort());
+//				logger.info("Service detected: "+defaultName+" at ip: "+ds.getHostIp()+"port: "+ds.getHostPort());
 				
 			} else if(mappings.size()==0){
 				logger.warn("Default service name: "+defaultName+" defined, but no mappings found.");
@@ -86,6 +86,9 @@ public class DockerContainerImpl implements DockerContainer {
 						int index = key.indexOf("_");
 						String kvName = key.substring(index+1,key.length());
 						ds.addKeyValue(kvName, element.getValue());
+						if("NAME".equals(kvName)) {
+							ds.setName(element.getValue());
+						}
 					}
 				}
 			}

@@ -1,10 +1,10 @@
 -buildpath:  \
 	osgi.core,\
 	osgi.cmpn,\
-	biz.aQute.bnd.annotation,\
-	${junit}
-Bundle-Version: 0.0.0.${tstamp}
+	org.osgi.service.component.annotations,\
+	nl.codemonkey.tasman.consul.osgi;version=latest,\
+	slf4j.api
 Private-Package:  \
 	nl.codemonkey.tasman.consulsource
-Service-Component:  \
+-dsannotations:  \
 	*

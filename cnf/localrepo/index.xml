@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1427280128063" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1427829961256" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="ch.qos.logback.classic"/>
@@ -860,278 +860,62 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="com.dexels.jgit"/>
+      <attribute name="osgi.identity" value="com.google.gson"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" type="Version" value="3.6.0.201412230720-r"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="3dd5338055ed12a8e389b62ed0206165d45cbbd2078db13fa72d56449a7abc4c"/>
-      <attribute name="url" value="com.dexels.jgit/com.dexels.jgit-3.6.0.jar"/>
-      <attribute name="size" type="Long" value="2409091"/>
+      <attribute name="osgi.content" value="13f44a2f6ead058da80a91ee650c073871942468e684a9bf6a0d0319138924ce"/>
+      <attribute name="url" value="com.google.gson/com.google.gson-2.3.1.jar"/>
+      <attribute name="size" type="Long" value="210856"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
-      <attribute name="osgi.wiring.bundle" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
+      <attribute name="osgi.wiring.bundle" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.host">
-      <attribute name="osgi.wiring.host" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
+      <attribute name="osgi.wiring.host" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.api"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.revwalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.diff,  org.eclipse.jgit.util,  org.eclipse.jgit.notes,  org.eclipse.jgit.dircache,  org.eclipse.jgit.api.errors,  org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.blame,  org.eclipse.jgit.transport,  org.eclipse.jgit.merge"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.api.errors"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.errors"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson.annotations"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.blame"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.diff"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson.reflect"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.diff"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.patch,  org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.util"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson.stream"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.dircache"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.util,  org.eclipse.jgit.events"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson.internal"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
     <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.errors"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.internal.storage.pack,  org.eclipse.jgit.transport,  org.eclipse.jgit.dircache"/>
+      <attribute name="osgi.wiring.package" value="com.google.gson.internal.bind"/>
+      <attribute name="version" type="Version" value="2.3.1"/>
+      <attribute name="bundle-symbolic-name" value="com.google.gson"/>
+      <attribute name="bundle-version" type="Version" value="2.3.1"/>
     </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.events"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.fnmatch"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.gitrepo"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.api,  org.eclipse.jgit.lib"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.gitrepo.internal"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-internal" value="true"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.ignore"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.ignore.internal"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-friends" value="org.eclipse.jgit.test"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.internal"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-friends" value="org.eclipse.jgit.test,org.eclipse.jgit.http.test"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.internal.storage.dfs"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-friends" value="org.eclipse.jgit.test"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.internal.storage.file"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-friends" value="org.eclipse.jgit.test,  org.eclipse.jgit.junit,  org.eclipse.jgit.junit.http,  org.eclipse.jgit.http.server,  org.eclipse.jgit.java7.test,  org.eclipse.jgit.pgm"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.internal.storage.pack"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="x-friends" value="org.eclipse.jgit.junit,org.eclipse.jgit.test,org.eclipse.jgit.pgm"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.lib"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.revwalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.util,  org.eclipse.jgit.events,  org.eclipse.jgit.dircache,  org.eclipse.jgit.internal.storage.file,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.transport"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.merge"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.diff,  org.eclipse.jgit.dircache"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.nls"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.notes"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.merge"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.patch"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.diff"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.revplot"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.revwalk"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.revwalk"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.treewalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.diff,  org.eclipse.jgit.revwalk.filter"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.revwalk.filter"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.revwalk,org.eclipse.jgit.util"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.storage.file"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.util"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.storage.pack"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.submodule"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.treewalk,org.eclipse.jgit.treewalk.filter"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.transport"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.transport.resolver,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.internal.storage.pack,  com.jcraft.jsch,  org.eclipse.jgit.util,  org.eclipse.jgit.util.io,  org.eclipse.jgit.internal.storage.file,  org.eclipse.jgit.lib,  org.eclipse.jgit.transport.http,  org.eclipse.jgit.errors,  org.eclipse.jgit.storage.pack"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.transport.http"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="javax.net.ssl"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.transport.resolver"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.transport"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.treewalk"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,  org.eclipse.jgit.revwalk,  org.eclipse.jgit.treewalk.filter,  org.eclipse.jgit.util,  org.eclipse.jgit.dircache"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.treewalk.filter"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.treewalk"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.util"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-      <directive name="uses" value="org.eclipse.jgit.lib,org.eclipse.jgit.transport.http,org.eclipse.jgit.storage.file"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="osgi.wiring.package" value="org.eclipse.jgit.util.io"/>
-      <attribute name="version" type="Version" value="3.6.0"/>
-      <attribute name="bundle-symbolic-name" value="com.dexels.jgit"/>
-      <attribute name="bundle-version" type="Version" value="3.6.0.201412230720-r"/>
-    </capability>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=com.googlecode.javaewah)(version&gt;=0.7.9)(!(version&gt;=0.8.0)))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(osgi.wiring.package=javax.crypto)"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(osgi.wiring.package=javax.net.ssl)"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(osgi.wiring.package=org.xml.sax)"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(osgi.wiring.package=org.xml.sax.helpers)"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.bundle">
-      <directive name="filter" value="(&amp;(osgi.wiring.bundle=com.jcraft.jsch)(bundle-version&gt;=0.1.37)(!(bundle-version&gt;=0.2.0)))"/>
-    </requirement>
     <requirement namespace="osgi.ee">
-      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.5))"/>
+      <directive name="filter" value="(|(&amp;(osgi.ee=JavaSE)(version=1.5))(&amp;(osgi.ee=JavaSE)(version=1.6))(&amp;(osgi.ee=JavaSE)(version=1.7))(&amp;(osgi.ee=JavaSE)(version=1.8)))"/>
     </requirement>
   </resource>
   <resource>
