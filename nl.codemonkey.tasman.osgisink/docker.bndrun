@@ -18,28 +18,28 @@
 	org.apache.commons.logging;version=1.1.1,\
 	slf4j.api;version=1.7.7,\
 	slf4j.simple;version=1.7.7,\
+	nl.codemonkey.tasman.core;version=latest,\
 	nl.codemonkey.tasman.example.redis;version=latest,\
 	bcpkix;version=1.51.0,\
 	bcprov;version=1.51.0,\
 	jackson-core-lgpl,\
 	jackson-mapper-lgpl,\
 	org.apache.felix.fileinstall;version=3.4.0,\
-	org.ops4j.pax.web.pax-web-jetty-bundle;version=3.1.4,\
-	org.apache.felix.eventadmin;version=1.4.2,\
 	nl.codemonkey.tasman.api;version=latest,\
+	nl.codemonkey.tasman.unix.socket;version=latest,\
 	org.apache.commons.pool2,\
-	nl.codemonkey.tasman.consul.osgi;version=latest,\
+	nl.codemonkey.tasman.boot2docker;version=latest,\
 	com.google.gson;version=2.3.1,\
-	nl.codemonkey.tasman.consulsource;version=latest
+	org.ops4j.pax.web.pax-web-jetty-bundle;version=4.1.1,\
+	org.apache.felix.eventadmin,\
+	org.apache.felix.webconsole.plugins.ds
 
--runrequires:\
+-runrequires:  \
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.configadmin)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
-	osgi.identity;filter:='(osgi.identity=org.apache.felix.log)',\
-	osgi.identity;filter:='(&(osgi.identity=osgi.cmpn)(version>=4.2))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.scr)(version>=1.6.0))'
 
 ## Uncomment if you need to change the HTTP port

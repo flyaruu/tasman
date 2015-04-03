@@ -1,4 +1,4 @@
-package nl.codemonkey.tasman.core;
+package nl.codemonkey.tasman.dockersource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name="tasman.docker.client")
+@Component(name="tasman.docker.client.source")
 public class DockerClientImpl implements DockerClient {
 
 	private JsonClient jsonClient = null;

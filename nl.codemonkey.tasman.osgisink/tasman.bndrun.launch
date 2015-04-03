@@ -3,9 +3,15 @@
 <booleanAttribute key="clean" value="true"/>
 <booleanAttribute key="dynamicBundles" value="true"/>
 <stringAttribute key="launchTarget" value="nl.codemonkey.tasman.core/docker.bndrun"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/nl.codemonkey.tasman.osgisink"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
 <mapEntry key="DOCKER_HOST" value="tcp://192.168.59.103:2376"/>
 </mapAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="nl.codemonkey.tasman.core"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="nl.codemonkey.tasman.osgisink"/>
 <booleanAttribute key="trace" value="false"/>
 </launchConfiguration>

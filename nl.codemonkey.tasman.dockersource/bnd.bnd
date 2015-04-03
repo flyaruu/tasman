@@ -12,8 +12,8 @@
 	jackson-mapper-lgpl;version=1.9,\
 	nl.codemonkey.tasman.api;version=latest,\
 	hamcrest-core
-Bundle-Version: 1.0.0.${tstamp}
+Bundle-Version: 0.0.0.${tstamp}
 Private-Package:  \
-	nl.codemonkey.tasman.core
--dsannotations:  \
+	nl.codemonkey.tasman.dockersource
+Service-Component:  \
 	*

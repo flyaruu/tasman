@@ -1,4 +1,4 @@
-package com.dexels.docker.http;
+
 
 import static org.junit.Assert.assertTrue;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 import nl.codemonkey.tasman.api.DockerContainer;
 import nl.codemonkey.tasman.api.DockerServiceMapping;
 import nl.codemonkey.tasman.api.JsonClient;
-import nl.codemonkey.tasman.core.DockerClientImpl;
+import nl.codemonkey.tasman.dockersource.DockerClientImpl;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;

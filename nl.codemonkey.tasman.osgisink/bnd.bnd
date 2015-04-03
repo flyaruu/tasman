@@ -1,0 +1,13 @@
+-buildpath:  \
+	osgi.core,\
+	osgi.cmpn,\
+	org.osgi.service.component.annotations;version=6.0,\
+	slf4j.api;version=1.7,\
+	junit;version=4.11,\
+	nl.codemonkey.tasman.api;version=latest,\
+	hamcrest-core
+Bundle-Version: 1.0.0.${tstamp}
+Private-Package:  \
+	nl.codemonkey.tasman.core
+-dsannotations:  \
+	*

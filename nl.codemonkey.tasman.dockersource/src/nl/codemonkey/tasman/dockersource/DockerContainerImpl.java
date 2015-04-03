@@ -1,4 +1,4 @@
-package nl.codemonkey.tasman.core;
+package nl.codemonkey.tasman.dockersource;
 
 import java.util.Collections;
 import java.util.HashMap;

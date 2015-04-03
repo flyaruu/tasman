@@ -30,7 +30,7 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = "tasman.docker.osgi",immediate=true)
+@Component(name = "tasman.docker.osgi.sink",immediate=true)
 public class DockerBridgeOSGi implements EventHandler, Runnable {
 
 	private static final int DEFAULT_POLLING_SPEED = 3000;
