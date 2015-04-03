@@ -4,7 +4,6 @@
 	org.osgi.service.component.annotations;version=6.0,\
 	org.apache.httpcomponents.httpclient;version=4.3,\
 	org.apache.httpcomponents.httpcore;version=4.3,\
-	org.apache.commons.logging;version=1.1,\
 	slf4j.api;version=1.7,\
 	bcpkix;version=1.51,\
 	bcprov;version=1.51,\
@@ -13,7 +12,7 @@
 	jackson-mapper-lgpl;version=1.9,\
 	nl.codemonkey.tasman.api;version=latest,\
 	hamcrest-core
-Bundle-Version: 0.0.0.${tstamp}
+Bundle-Version: 1.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.core
 -dsannotations:  \

@@ -10,3 +10,4 @@ public interface JsonClient {
 	public void activate(Map<String,Object> settings);
 	public String getHostname();
 }
+

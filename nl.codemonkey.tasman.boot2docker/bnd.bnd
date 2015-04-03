@@ -7,13 +7,12 @@
 	jackson-core-lgpl,\
 	org.apache.httpcomponents.httpclient,\
 	org.apache.httpcomponents.httpcore,\
-	bcpkix;version=1.51,\
-	bcprov;version=1.51,\
-	slf4j.api;version=1.7,\
+	hamcrest-core,\
 	jackson-mapper-lgpl,\
-	org.apache.commons.logging,\
-	hamcrest-core
-Bundle-Version: 0.0.0.${tstamp}
+	bcpkix;version=latest,\
+	bcprov;version=latest,\
+	slf4j.api
+Bundle-Version: 1.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.boot2docker
 -dsannotations:  \

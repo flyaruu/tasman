@@ -6,7 +6,7 @@
 	osgi.core;version=5.0,\
 	osgi.cmpn;version=5.0,\
 	slf4j.api;version=1.7
-Bundle-Version: 0.0.0.${tstamp}
+Bundle-Version: 1.0.0.${tstamp}
 Bundle-ClassPath: .,lib/jedis-2.6.2.jar,lib/org.apache.commons.pool2-2.3.0.jar
 
 Private-Package:  \

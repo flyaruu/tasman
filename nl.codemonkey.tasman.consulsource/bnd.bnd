@@ -8,3 +8,4 @@ Private-Package:  \
 	nl.codemonkey.tasman.consulsource
 -dsannotations:  \
 	*
+Bundle-Version: 1.0.0.${tstamp}
