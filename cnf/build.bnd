@@ -69,11 +69,6 @@ junit: junit;version=4.11
 -releaserepo: Release
 
 -plugin:\
-    aQute.bnd.deployer.repository.aether.AetherRepository; url='http://spiritus.dexels.com:9090/nexus/content/repositories/thirdparty/';\
-        indexUrl='http://spiritus.dexels.com:9090/nexus/content/repositories/obr2/.meta/obr.xml'; \
-        username=deployment;\
-        password=u8N9S0QZ8Ga3; \
-        name=Aether,\
  	aQute.bnd.deployer.repository.wrapper.Plugin; \
 		location="${workspace}/cnf/cache/wrapper"; \
 		reindex=true, \
