@@ -11,7 +11,8 @@
 	junit;version=4.11,\
 	jackson-core-lgpl;version=1.9,\
 	jackson-mapper-lgpl;version=1.9,\
-	nl.codemonkey.tasman.api;version=latest
+	nl.codemonkey.tasman.api;version=latest,\
+	hamcrest-core
 Bundle-Version: 0.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.core

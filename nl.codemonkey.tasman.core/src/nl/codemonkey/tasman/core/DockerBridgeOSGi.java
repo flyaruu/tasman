@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
 @Component(name = "tasman.docker.osgi",immediate=true)
 public class DockerBridgeOSGi implements EventHandler, Runnable {
 
+	private static final int DEFAULT_POLLING_SPEED = 3000;
+
 	private DockerClient dockerClient = null;
 
 	private ConfigurationAdmin configAdmin = null;
@@ -44,7 +46,6 @@ public class DockerBridgeOSGi implements EventHandler, Runnable {
 	private boolean running = false;
 	@Activate
 	public void activate() throws IOException {
-		logger.info("Activating config components");
 		running = true;
 		pool.submit(this);
 	}
@@ -72,8 +73,8 @@ public class DockerBridgeOSGi implements EventHandler, Runnable {
 		for (Configuration orphan : copy) {
 			orphan.delete();
 			ownedConfiguration.remove(orphan);
+			logger.info("# orphans: "+copy.size()+" containers: "+containerCount);
 		}
-		System.err.println("# orphans: "+copy.size()+" containers: "+containerCount);
 	}
 
 	private String generateServicePid(DockerServiceMapping mapping) {
@@ -82,7 +83,7 @@ public class DockerBridgeOSGi implements EventHandler, Runnable {
 		if(driver!=null) {
 			return "tasman."+driver;
 		}
-		logger.info("servicePId missing: "+mm);
+		logger.info("servicePid missing: "+mm);
 
 		return null;
 	}
@@ -97,7 +98,7 @@ public class DockerBridgeOSGi implements EventHandler, Runnable {
 			}
 		} 
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(DEFAULT_POLLING_SPEED);
 		} catch (InterruptedException e) {
 			logger.error("Error: ", e);
 		}

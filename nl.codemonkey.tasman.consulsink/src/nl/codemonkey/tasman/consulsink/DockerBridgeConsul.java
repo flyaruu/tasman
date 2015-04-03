@@ -39,7 +39,6 @@ public class DockerBridgeConsul implements Runnable {
 	
 	@Activate
 	public void activate() throws IOException {
-		logger.info("Activating config components");
 		running = true;
 		pool.submit(this);
 	}
@@ -47,14 +46,11 @@ public class DockerBridgeConsul implements Runnable {
 	private void refreshConfig() throws IOException {
 		dockerClient.refresh();
 		Set<DockerContainer> containers = dockerClient.getContainers();
-		int containerCount = 0;
 		Map<String,Service> services = agentClient.getAgentServices().getValue();
-		System.err.println("Services: "+services);
 		Map<String,Service> copy = new HashMap<>();
 		for (Service s : services.values()) {
 			copy.put(s.getId(), s);
 		}
-		System.err.println("Remapped services: "+copy);
 		for (DockerContainer dockerContainer : containers) {
 			for (Entry<String, DockerServiceMapping> serviceMapping : dockerContainer
 					.getMappings().entrySet()) {
@@ -67,9 +63,6 @@ public class DockerBridgeConsul implements Runnable {
 					copy.remove(serviceId);
 					continue;
 				}
-				System.err.println(">>>>>> serviceId: "+serviceId);
-//				System.err.println(">>>>>> servicePid: "+servicePid);
-				System.err.println(">>>>>> ConsulId: "+id);
 				if(servicePid!=null) {
 					insertConsul(serviceId, servicePid,serviceMapping.getValue());
 					copy.remove(serviceId);
@@ -77,7 +70,6 @@ public class DockerBridgeConsul implements Runnable {
 					logger.info("Skipping incomplete mapping: "+serviceMapping.getValue());
 				}
 			}
-			containerCount++;
 		}
 		for (Entry<String,Service> entry : copy.entrySet()) {
 			if("consul".equals(entry.getValue().getService())) {
@@ -88,20 +80,16 @@ public class DockerBridgeConsul implements Runnable {
 			agentClient.agentServiceDeregister(entry.getKey());
 			deleteAllFor(entry.getKey());
 		}
-		System.err.println("# orphans: "+copy.size()+" containers: "+containerCount);
-		System.err.println(">>"+copy+"<<");
 	}
 
 	private void insertConsul(String serviceId, String servicePid,
 			DockerServiceMapping value) {
-//		Map<String,Service> services = consulClient.getAgentServices().getValue();
 		NewService ns = new NewService();
 		ns.setAddress(value.getHostIp());
 		ns.setPort(Integer.parseInt(value.getHostPort()));
 		ns.setTags(value.getTagList());
 		ns.setId(serviceId);
 		ns.setName(value.getName());
-		System.err.println("NS: "+ns);
 		agentClient.agentServiceRegister(ns);
 		insertKv(serviceId,value.getKeyValue());
 	}
@@ -129,8 +117,7 @@ public class DockerBridgeConsul implements Runnable {
 		if(driver!=null) {
 			return "tasman."+driver;
 		}
-		logger.info("servicePId missing: "+mm);
-
+		logger.info("servicePid missing: "+mm);
 		return null;
 	}
 	

@@ -15,9 +15,7 @@ import nl.codemonkey.tasman.api.DockerClient;
 import nl.codemonkey.tasman.api.DockerContainer;
 import nl.codemonkey.tasman.api.JsonClient;
 
-import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.osgi.service.component.annotations.Activate;
@@ -130,11 +128,11 @@ public class DockerClientImpl implements DockerClient {
     	return result;
 	}
 
-	private void dumpNode(JsonNode n) {
-		try {
-			new ObjectMapper().configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false).writerWithDefaultPrettyPrinter().writeValue(System.out, n);
-		} catch (Throwable e) {
-			logger.error("Error: ", e);
-		}
-	}
+//	private void dumpNode(JsonNode n) {
+//		try {
+//			new ObjectMapper().configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false).writerWithDefaultPrettyPrinter().writeValue(System.out, n);
+//		} catch (Throwable e) {
+//			logger.error("Error: ", e);
+//		}
+//	}
 }

@@ -35,6 +35,7 @@ import com.ecwid.consul.v1.kv.model.GetBinaryValue;
 @Component(name = "tasman.consul.osgi",immediate=true)
 public class ConsulBridgeOSGi implements EventHandler, Runnable {
 
+	private static final int DEFAULT_POLLING_SPEED = 3000;
 	private ConfigurationAdmin configAdmin = null;
 	private Map<String,Configuration> ownedConfiguration = new HashMap<>();
 	private final static Logger logger = LoggerFactory.getLogger(ConsulBridgeOSGi.class);
@@ -47,36 +48,36 @@ public class ConsulBridgeOSGi implements EventHandler, Runnable {
 	
 	@Activate
 	public void activate() throws IOException {
-		logger.info("Activating config components");
+		logger.debug("Activating config components");
 		running = true;
 		pool.submit(this);
 	}
 
 	private void refreshConfig() throws IOException {
 		Map<String,Configuration> copy = new HashMap<>(ownedConfiguration);
-		int containerCount = 0;
 		Map<String,Service> services = agentClient.getAgentServices().getValue();
 		for (Map.Entry<String, Service> element : services.entrySet()) {
-			
-			String serviceId = generateServiceId(element.getValue());
-			Map<String,String> settings = loadConsulSettings(serviceId); 
-//			String id = dockerContainer.getId();
-			String servicePid = generateServicePid(settings);
-			if(servicePid!=null) {
-				Configuration newConfig = injectConfig(serviceId, servicePid,settings,element.getValue());
-				copy.remove(serviceId);
-			} else {
-//				logger.info("Skipping incomplete mapping: "+serviceMapping.getValue());
+			String address = element.getValue().getAddress();
+			if(isOnThisHost(address)) {
+				String serviceId = generateServiceId(element.getValue());
+				Map<String,String> settings = loadConsulSettings(serviceId); 
+				String servicePid = generateServicePid(settings);
+				if(servicePid!=null) {
+					injectConfig(serviceId, servicePid,settings,element.getValue());
+					copy.remove(serviceId);
+				}
 			}
-			
-			
 		}
 
 		for (Map.Entry<String, Configuration> orphanEntry : copy.entrySet()) {
 			orphanEntry.getValue().delete();
 			ownedConfiguration.remove(orphanEntry.getKey());
 		}
-		System.err.println("# orphans: "+copy.size()+" containers: "+containerCount);
+	}
+
+	private boolean isOnThisHost(String address) {
+		String hostname = System.getenv("HOSTNAME");
+		return address.equals(hostname);
 	}
 
 	private Map<String, String> loadConsulSettings(String serviceId) {
@@ -97,13 +98,11 @@ public class ConsulBridgeOSGi implements EventHandler, Runnable {
 	}
 
 	private String generateServicePid(Map<String,String> settings) {
-//		Map<String, String> mm = mapping.getKeyValue();
 		String driver = settings.get("DRIVER");
 		if(driver!=null) {
 			return "tasman."+driver;
 		}
 		logger.info("servicePid missing: "+settings);
-
 		return null;
 	}
 	
@@ -117,18 +116,17 @@ public class ConsulBridgeOSGi implements EventHandler, Runnable {
 			}
 		} 
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(DEFAULT_POLLING_SPEED);
 		} catch (InterruptedException e) {
 			logger.error("Error: ", e);
 		}
 		pool.submit(this);
 	}
 
-	private Configuration injectConfig(String serviceId, String servicePid,Map<String,String> mapping, Service service) throws IOException {
+	private void injectConfig(String serviceId, String servicePid,Map<String,String> mapping, Service service) throws IOException {
 		Configuration c = createOrReuse(servicePid,"(id="+serviceId+")", true);
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 		properties.put("id", serviceId);
-		System.err.println(">>>>>>>>>>>>>>>>>>>>>> "+mapping);
 		for (Entry<String, String> e : mapping.entrySet()) {
 			if(e.getKey().equals("DRIVER") || e.getKey().equals("NAME")) {
 				continue;
@@ -145,7 +143,6 @@ public class ConsulBridgeOSGi implements EventHandler, Runnable {
 		}
 		appendIfChanged(c, properties);
 		ownedConfiguration.put(serviceId,c);
-		return c;
 	}
 	
 	private static String join(Iterable<? extends CharSequence> s, String delimiter) {
@@ -247,7 +244,6 @@ public class ConsulBridgeOSGi implements EventHandler, Runnable {
 
 	private String generateServiceId(Service service) {
 		String id = service.getId();
-		System.err.println("id: "+id);
 		String serviceId = id.substring(0,Math.min(id.length(), 8)) + "-" + service.getAddress() + "-"
 						+ service.getPort();
 		logger.info("serviceId: {}",serviceId);

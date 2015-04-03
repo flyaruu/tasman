@@ -11,7 +11,8 @@
 	bcprov;version=1.51,\
 	slf4j.api;version=1.7,\
 	jackson-mapper-lgpl,\
-	org.apache.commons.logging
+	org.apache.commons.logging,\
+	hamcrest-core
 Bundle-Version: 0.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.boot2docker
