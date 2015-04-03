@@ -8,7 +8,8 @@
 	slf4j.api;version=1.7,\
 	org.osgi.service.component.annotations,\
 	nl.codemonkey.tasman.api;version=latest,\
-	nl.codemonkey.tasman.consul.osgi;version=latest
+	nl.codemonkey.tasman.consul.osgi;version=latest,\
+	org.apache.commons.logging
 Bundle-Version: 1.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.consulsink
