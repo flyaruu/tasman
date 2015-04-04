@@ -19,7 +19,8 @@ Import-Package:  \
 	*
 Bundle-ClassPath: .,junixsocket-1.4.jar
 Private-Package:  \
-	com.dexels.unix.socket.impl
+	com.dexels.unix.socket.impl,\
+	nl.codemonkey.tasman.unix.socket
 Bundle-NativeCode:  native/libjunixsocket-linux-1.5-i386.so; processor=x86; osname=Linux,\
  native/libjunixsocket-linux-1.5-amd64.so; processor=x86_64; osname=Linux
 -dsannotations:  \
