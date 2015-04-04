@@ -70,8 +70,10 @@ public class UnixDockerClient implements JsonClient {
 	}
 	
 	@Override
-	public JsonNode callUrl(String url) throws IOException {
+	public JsonNode callUrl(String u) throws IOException {
+		String url = "unix:/"+u;
 		HttpGet httpget = new HttpGet(url);
+		logger.info("Opening url: "+url);
 		CloseableHttpResponse response = httpclient.execute(httpget);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		response.getEntity().writeTo(baos);
