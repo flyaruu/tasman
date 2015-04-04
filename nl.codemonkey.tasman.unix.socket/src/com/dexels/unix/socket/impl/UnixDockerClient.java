@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dexels.unix.socket.UnixSocketFactory;
 
-@Component(name = "docker")
+@Component(name = "docker", immediate=true)
 public class UnixDockerClient implements JsonClient {
 
 	private CloseableHttpClient httpclient;
@@ -74,6 +74,7 @@ public class UnixDockerClient implements JsonClient {
 		String url = "unix:/"+u;
 		HttpGet httpget = new HttpGet(url);
 		logger.info("Opening url: "+url);
+		
 		CloseableHttpResponse response = httpclient.execute(httpget);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		response.getEntity().writeTo(baos);
