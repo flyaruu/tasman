@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir -p cache
 cp nl.codemonkey.tasman.api/generated/nl.codemonkey.tasman.api.jar cache
 cp nl.codemonkey.tasman.boot2docker/generated/*.jar cache
 cp nl.codemonkey.tasman.consul.osgi/generated/*.jar cache

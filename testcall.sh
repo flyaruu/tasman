@@ -1,0 +1,2 @@
+java -cp nl.codemonkey.tasman.api.jar:nl.codemonkey.tasman.unix.socket.jar:slf4j.api-1.7.7.jar:slf4j.simple-1.7.7.jar:org.apache.httpcomponents.httpcore-4.3.3.jar:org.apache.httpcomponents.httpclient-4.3.6.jar:jackson-core-lgpl-1.9.13.jar:junixsocket-1.4.jar:org.apache.commons.logging-1.1.3.jar -Djava.library.path=native/  nl/codemonkey/tasman/unix/socket/TestUnixSocket /var/run/docker/sock/ /info
+
