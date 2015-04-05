@@ -15,17 +15,29 @@ import org.newsclub.net.unix.AFUNIXSocketAddress;
 
 public class UnixSocketFactory implements ConnectionSocketFactory {
 
-	private File socketFile;
+	private final File socketFile;
 
-	public UnixSocketFactory() {
+	public UnixSocketFactory(String path) {
+		this.socketFile = new File(path);
 	}
 
+//	  @Override
+//	  public void configure(HttpClient httpClient, String dockerHost) {
+//	    this.socketFile = new File(dockerHost.replaceAll("unix://localhost", ""));
+//	    Scheme unixScheme = new Scheme("unix", 0xffff, this);
+//	    httpClient.getConnectionManager().getSchemeRegistry().register(unixScheme);
+//	  }
+
+	  
 	public boolean supports(String scheme) {
+		System.err.println("supports: "+scheme);
 		return "unix".equals(scheme);
 	}
 
 	public String sanitize(String dockerHost) {
-		return dockerHost.replaceAll("^unix://", "unix://localhost");
+		String replaceAll = dockerHost.replaceAll("^unix://", "unix://localhost");
+		System.err.println("sanitized: "+dockerHost+" to "+replaceAll);
+		return replaceAll;
 	}
 
 
