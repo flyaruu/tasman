@@ -3,6 +3,8 @@ package com.dexels.unix.socket.impl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 import nl.codemonkey.tasman.api.JsonClient;
@@ -42,15 +44,19 @@ public class UnixDockerClient implements JsonClient {
 		if (path == null) {
 			path = "/var/run/docker.sock";
 		}
-		this.httpclient = createSocketClient(path);
+		try {
+			this.httpclient = createSocketClient(path);
+		} catch (URISyntaxException e) {
+			logger.error("Error: ", e);
+		}
 	}
 
-	private CloseableHttpClient createSocketClient(String path) {
+	private CloseableHttpClient createSocketClient(String path) throws URISyntaxException {
 		Registry<ConnectionSocketFactory> registry = RegistryBuilder
 				.<ConnectionSocketFactory> create()
 				.register("http",
 						PlainConnectionSocketFactory.getSocketFactory())
-				.register("unix", new UnixSocketFactory(path)).build();
+				.register("unix", new UnixSocketFactory(new URI( "unix://localhost"+path))).build();
 		HttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
 				registry);
 		CloseableHttpClient httpclient = HttpClients.custom()

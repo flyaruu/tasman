@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 
 import org.apache.http.HttpHost;
 import org.apache.http.conn.ConnectTimeoutException;
@@ -17,8 +18,12 @@ public class UnixSocketFactory implements ConnectionSocketFactory {
 
 	private final File socketFile;
 
-	public UnixSocketFactory(String path) {
-		this.socketFile = new File(path);
+	public UnixSocketFactory(final URI socketUri) {
+	    final String filename = socketUri.toString()
+		        .replaceAll("^unix:///", "unix://localhost/")
+		        .replaceAll("^unix://localhost", "");
+
+		    this.socketFile = new File(filename);
 	}
 
 //	  @Override
@@ -27,7 +32,6 @@ public class UnixSocketFactory implements ConnectionSocketFactory {
 //	    Scheme unixScheme = new Scheme("unix", 0xffff, this);
 //	    httpClient.getConnectionManager().getSchemeRegistry().register(unixScheme);
 //	  }
-
 	  
 	public boolean supports(String scheme) {
 		System.err.println("supports: "+scheme);
@@ -40,28 +44,36 @@ public class UnixSocketFactory implements ConnectionSocketFactory {
 		return replaceAll;
 	}
 
-
-	@Override
-	public Socket connectSocket(int connectTimeout, Socket socket, HttpHost host,
-			InetSocketAddress remoteAddress, InetSocketAddress localAddress,
-			HttpContext context) throws IOException {
-		try {
-//			 socket.setSoTimeout(soTimeout)
-			socket.connect(new AFUNIXSocketAddress(socketFile), connectTimeout);
-			// socket.connect(new AFUNIXSocketAddress(socketFile))
-		} catch (SocketTimeoutException e) {
-			throw new ConnectTimeoutException("Connect to '" + socketFile
-					+ "' timed out");
-		}
-
-		return socket;
-	}
-
 	@Override
 	public Socket createSocket(HttpContext context) throws IOException {
 		AFUNIXSocket socket = AFUNIXSocket.newInstance();
 		return socket;
 	}
 
-	
+
+
+	  public static URI sanitizeUri(final URI uri) {
+	    if (uri.getScheme().equals("unix")) {
+	      return URI.create("unix://localhost:80");
+	    } else {
+	      return uri;
+	    }
+	  }
+
+
+	  @Override
+	  public Socket connectSocket(final int connectTimeout,
+	                              final Socket socket,
+	                              final HttpHost host,
+	                              final InetSocketAddress remoteAddress,
+	                              final InetSocketAddress localAddress,
+	                              final HttpContext context) throws IOException {
+	    try {
+	      socket.connect(new AFUNIXSocketAddress(socketFile), connectTimeout);
+	    } catch (SocketTimeoutException e) {
+	      throw new ConnectTimeoutException(e, null, remoteAddress.getAddress());
+	    }
+
+	    return socket;
+	  }
 }
