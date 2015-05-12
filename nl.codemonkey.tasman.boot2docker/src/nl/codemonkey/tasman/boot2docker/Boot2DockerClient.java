@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 
 
-@Component(name="tasman.docker.boot2docker", configurationPolicy=ConfigurationPolicy.REQUIRE)
+@Component(name="tasman.docker.boot2docker", configurationPolicy=ConfigurationPolicy.REQUIRE,immediate=true)
 public class Boot2DockerClient implements JsonClient {
 
 	private CloseableHttpClient httpclient;
@@ -104,8 +104,11 @@ public class Boot2DockerClient implements JsonClient {
 	public String getHostname() {
 //		DOCKER_HOST=tcp://192.168.59.103:2376
 		String dockerhost = System.getenv("DOCKER_HOST");
-		String host = dockerhost.split("//")[1].split(":")[0];
-		return host;
+		if(url!=null) {
+			dockerhost = url.split("//")[1].split(":")[0];
+		}
+		// fallback to ENV:
+		return dockerhost;
 	}
 	
 

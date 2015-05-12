@@ -23,6 +23,11 @@ public class RedisTester {
 		testPool(pool);
 	}
 
+	
+	public void removeRedisPool(JedisPool pool) {
+		logger.info("Pool removed");
+	}
+	
 	private void testPool(JedisPool pool) {
 		Jedis resource = null;
 		try {
@@ -37,8 +42,5 @@ public class RedisTester {
 			}
 		}
 	}
-	
-	public void removeRedisPool(JedisPool pool) {
-		logger.info("Pool removed");
-	}
+
 }

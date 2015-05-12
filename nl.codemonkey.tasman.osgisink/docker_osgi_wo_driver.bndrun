@@ -26,13 +26,13 @@
 	jackson-mapper-lgpl,\
 	org.apache.felix.fileinstall;version=3.4.0,\
 	nl.codemonkey.tasman.api;version=latest,\
-	nl.codemonkey.tasman.unix.socket;version=latest,\
 	org.apache.commons.pool2,\
-	nl.codemonkey.tasman.boot2docker;version=latest,\
 	com.google.gson;version=2.3.1,\
 	org.ops4j.pax.web.pax-web-jetty-bundle;version=4.1.1,\
 	org.apache.felix.eventadmin,\
-	org.apache.felix.webconsole.plugins.ds
+	org.apache.felix.webconsole.plugins.ds,\
+	nl.codemonkey.tasman.boot2docker;version=latest,\
+	nl.codemonkey.tasman.dockersource;version=latest
 
 -runrequires:  \
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\

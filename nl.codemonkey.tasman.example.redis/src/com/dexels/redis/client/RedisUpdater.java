@@ -19,7 +19,6 @@ import redis.clients.jedis.JedisPool;
 
 @Component(property=Constants.SERVICE_PID+"="+"tasman.redis",immediate=true)
 public class RedisUpdater implements ManagedServiceFactory {
-
 	
 	private final static Logger logger = LoggerFactory
 			.getLogger(RedisUpdater.class);

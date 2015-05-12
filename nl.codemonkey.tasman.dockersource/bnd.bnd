@@ -15,5 +15,5 @@
 Bundle-Version: 0.0.0.${tstamp}
 Private-Package:  \
 	nl.codemonkey.tasman.dockersource
-Service-Component:  \
+-dsannotations:  \
 	*
