@@ -59,7 +59,7 @@ public class UnixDockerClient implements JsonClient {
 				.register("unix", new UnixSocketFactory(new URI( "unix://localhost"+path))).build();
 		HttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(
 				registry);
-		CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(connManager)
+		CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(cm)
 				.setConnectionManager(cm).build();
 		return httpclient;
 	}
